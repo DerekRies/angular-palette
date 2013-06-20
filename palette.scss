@@ -3,9 +3,9 @@ $shadow-color: rgba(0, 0, 0, 0.6);
 $secondary-bg-color: #383838;
 $active-bg: #181818;
 $text-color: #FFF;
-$highlight-text-color: #55E7FF;
+$highlight-text-color: #43C5DB;
 
-$palette-width: 520px;
+$palette-width: 500px;
 $palette-padding: 6px;
 
 .palette-body {
@@ -18,10 +18,15 @@ $palette-padding: 6px;
     top: 0;
     left: 50%;
     border: 1px solid $shadow-color;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 
     @include border-radius(3px);
     @include box-shadow(0px 5px 8px $shadow-color);
     @include transition(all 150ms ease-in-out);
+
+    opacity: 0;
+    @include transform(scale3d(0.85, 0.85, 1));
+    visibility: hidden;
 
     form {
         margin: 0;
@@ -29,10 +34,11 @@ $palette-padding: 6px;
     }
 }
 
-.palette-body.palettehidden {
+.palette-body.palettevisible {
     // display: none; // Remove this line to go back to animations
-    opacity: 0;
-    @include transform(scale3d(0.85, 0.85, 1));
+    opacity: 1;
+    @include transform(scale3d(1, 1, 1));
+    visibility: visible;
 }
 
 .palette-inner {
@@ -88,6 +94,7 @@ input[type="text"].palette-input {
 .palettematch {
   color: $highlight-text-color;
   font-weight: bold;
+  text-decoration: underline;
 }
 
 .palette-body ::-webkit-scrollbar {
