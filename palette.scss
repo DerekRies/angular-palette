@@ -22,7 +22,7 @@ $palette-padding: 6px;
 
     @include border-radius(3px);
     @include box-shadow(0px 5px 8px $shadow-color);
-    @include transition(all 150ms ease-in-out);
+    @include transition(all 100ms ease-in-out);
 
     opacity: 0;
     @include transform(scale3d(0.85, 0.85, 1));

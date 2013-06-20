@@ -11,7 +11,7 @@ angular.module('palette', ['ngSanitize'])
 
       exportCommands: function (newCommands) {
         if(typeof this.subscribedMethod !== 'undefined'){
-          console.log('Should be calling subscribedMethod right now');
+          // console.log('Should be calling subscribedMethod right now');
           this.subscribedMethod(newCommands, oldCommands);
         }
         oldCommands = newCommands;
@@ -20,7 +20,7 @@ angular.module('palette', ['ngSanitize'])
         return oldCommands;
       },
       subscribe: function (fn) {
-        console.log('Setting up subscribe ', fn);
+        // console.log('Setting up subscribe ', fn);
         this.subscribedMethod = fn;
       }
     };
@@ -34,6 +34,12 @@ angular.module('palette', ['ngSanitize'])
     };
   })
   .directive('focusOn', [function () {
+    // will focus the element its applied to when the condition passed
+    // to it is true. Value is interpolated at the moment, {{value}}
+    // and so is equal to a string.
+    //
+    // When trying to use an actual true/false expression with binding
+    // it was causing scope issues with the rest of module.
     return {
       restrict: 'A',
       link: function(scope, elem, attrs) {
@@ -48,6 +54,9 @@ angular.module('palette', ['ngSanitize'])
     };
   }])
   .directive('scrollToContain', function () {
+    // Like the focus-on directive, the window will scroll to contain
+    // any element with this applied to it when the condition passed is
+    // true.
     return {
       restrict: 'A',
       link: function (scope, elem, attrs) {
@@ -62,6 +71,7 @@ angular.module('palette', ['ngSanitize'])
   })
   .filter('highlight', function () {
 
+    // super ugly function needs beauty help
     function wrapText (index, str, prefix, suffix, innerTextLength) {
       return [str.slice(0, index), prefix, str.slice(index, index + innerTextLength), suffix, str.slice(index + innerTextLength)].join('');
     }
@@ -72,7 +82,6 @@ angular.module('palette', ['ngSanitize'])
         if(ind !== -1){
           return wrapText(ind, value, '<span class="palettematch">', '</span>', query.length);
         }
-        // console.log(value, query, ind);
       }
       return value;
     };
@@ -86,25 +95,59 @@ angular.module('palette', ['ngSanitize'])
       templateUrl: 'drcomponents/palette/palette.tpl.html',
 
       link: function (scope) {
-        var keys = {};
-        angular.element(window).bind('keydown', function (e) {
-          keys[e.keyCode] = true;
-          if(keys[17] && keys[77]) {
-            if(scope.visible){
-              scope.$apply(function () {
-                scope.close();
-              });
-            }
-            else{
-              scope.$apply(function () {
-                scope.open();
-              });
-            }
+        /*
+        This works on windows and linux, but no mac because their cmd key is different
+        Going to try and get a solution using the jQuery keypress (which worked on linux
+        and mac last time I tried, but no windows)
+         */
+        // var keys = {};
+        // angular.element(window).bind('keydown', function (e) {
+        //   keys[e.keyCode] = true;
+        //   if(keys[17] && keys[77]) {
+        //     if(scope.visible){
+        //       scope.$apply(function () {
+        //         scope.close();
+        //       });
+        //     }
+        //     else{
+        //       scope.$apply(function () {
+        //         scope.open();
+        //       });
+        //     }
+        //   }
+        // })
+        // .bind('keyup', function (e) {
+        //   keys[e.keyCode] = false;
+        // });
+
+
+        /* =============================================================================
+
+          MOUSETRAP DEPENDENCY
+
+          Decided to go with Mousetrap as it looks like a very good keyboard shortcut
+          library. The dependency makes sense because in this case the intended audience
+          for angular-palette is people who want to make their applications keyboard and
+          power user friendly, the same audience as Mousetrap. People that want to use
+          angular-palette should also take advantage of mousetrap and bind many of their
+          actions to keyboard shortcuts. In the future these keyboard shortcuts will be
+          shown in the palette next to each of the commands.
+
+        ============================================================================= */
+
+        Mousetrap.bindGlobal(['ctrl+shift+m', 'command+shift+m'], function () {
+          if (scope.visible) {
+            scope.$apply(function () {
+              scope.close();
+            });
           }
-        })
-        .bind('keyup', function (e) {
-          keys[e.keyCode] = false;
+          else {
+            scope.$apply(function () {
+              scope.open();
+            });
+          }
         });
+
       },
 
       controller: function ($scope) {
@@ -115,6 +158,7 @@ angular.module('palette', ['ngSanitize'])
             ESCAPE_KEY = 27;
 
         $scope.visible = false;
+        // some placeholder commands for the moment
         $scope.commands = [
           { name: 'Fake: Placeholder Command' },
           { name: 'Placeholder: Does Nothing' },
@@ -124,7 +168,8 @@ angular.module('palette', ['ngSanitize'])
           { name: 'Placeholder: Lorem ipsum dolor.' },
           { name: 'Fake: Lorem ipsum dolor sit amet, consectetur.' },
           { name: 'Placeholder: Lorem ipsum dolor sit amet.' },
-          { name: 'GOTO: Google.com', cmd: 'extLink', data: 'http://google.com' },
+          { name: 'Goto: Google.com', cmd: 'extLink', data: 'http://google.com' },
+          { name: 'Goto: /r/programming', cmd: 'extLink', data: 'http://reddit.com/r/programming' },
         ];
 
         function addRoutesToPallete () {
@@ -133,7 +178,7 @@ angular.module('palette', ['ngSanitize'])
 
             if (typeof route.name !== 'undefined') {
               $scope.commands.push({
-                name: 'GOTO: ' + route.name,
+                name: 'Goto: ' + route.name,
                 cmd: 'link',
                 data: path
               });
@@ -142,7 +187,7 @@ angular.module('palette', ['ngSanitize'])
         }
 
         function removeOldCommands (oldCommands) {
-          console.log('removed ', $scope.commands.splice(-oldCommands.length, oldCommands.length));
+          $scope.commands.splice(-oldCommands.length, oldCommands.length);
         }
 
         function addNewCommands (newCommands) {
@@ -150,16 +195,15 @@ angular.module('palette', ['ngSanitize'])
         }
 
         paletteService.subscribe(function (newCommands, oldCommands) {
-          console.log('Change in the subscribe', oldCommands);
+          // console.log('Change in the subscribe', oldCommands);
           removeOldCommands(oldCommands);
           addNewCommands(newCommands);
         });
 
         $scope.activeCmd = 0;
         addRoutesToPallete();
-        // $scope.commands.push.apply($scope.commands, paletteService.getCommands());
 
-        $scope.keyHandler = function (e) {
+        $scope.paletteInputKeyHandler = function (e) {
           if(e.keyCode === UP_ARROW_KEY) {
             e.preventDefault();
             $scope.moveSelectUp();
@@ -205,8 +249,9 @@ angular.module('palette', ['ngSanitize'])
         };
 
         $scope.close = function () {
-          // if this isn't delayed then the palette closes before ng-clicks can fire
-          // this enables the mouse to be used to select results (but don't use the mouse you bad)
+          // if this isn't delayed then the palette closes (from the blur event)
+          // before ng-clicks can fire this enables the mouse to be used to select
+          // results (But seriously, don't use the mouse, you bad)
           $timeout(function () {
             $scope.visible = false;
           },1);
@@ -219,23 +264,24 @@ angular.module('palette', ['ngSanitize'])
         };
 
         $scope.useSelection = function (selection) {
-          if(typeof selection !== 'undefined') {
+          if(typeof selection === 'undefined') {
+            // Special Text Commands like ':300' to go 300px down
+            // More features will be implemented later
+            $scope.parseTextCommand($scope.query);
+          }
+          else {
             try {
               if (typeof selection.cmd === 'function') {
                 selection.cmd(selection.data);
               }
               else {
+                // Built in commands like link and extLink
                 $scope[selection.cmd](selection.data);
               }
             }
             catch (e) {
               console.log('missing a command');
             }
-          }
-          else {
-            // Special Text Commands like ':300' to go 300px down
-            // More features will be implemented later
-            $scope.parseTextCommand($scope.query);
           }
         };
 
