@@ -3,6 +3,7 @@ $shadow-color: rgba(0, 0, 0, 0.6);
 $secondary-bg-color: #383838;
 $active-bg: #181818;
 $text-color: #FFF;
+$highlight-text-color: #55E7FF;
 
 $palette-width: 520px;
 $palette-padding: 6px;
@@ -71,16 +72,22 @@ input[type="text"].palette-input {
     border-top: 1px solid $main-bg-color;
     padding: 3px 3px 10px 8px;
     &:first-child {
-        border-top: none;
+        // border-top: none;
     }
+    @include transition(background 80ms ease-out);
 }
 
 .palette-item.selected {
-    padding: 6px 3px 10px 8px;
+    padding: 4px 3px 10px 8px;
     color: $text-color;
     background: $active-bg;
-    font-weight: bold;
+    // font-weight: bold;
     border-top: none;
+}
+
+.palettematch {
+  color: $highlight-text-color;
+  font-weight: bold;
 }
 
 .palette-body ::-webkit-scrollbar {

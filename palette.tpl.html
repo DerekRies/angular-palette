@@ -2,7 +2,8 @@
     <div class="palette-inner">
         <input type="text" class="palette-input" ng-model="query" ng-blur="close()" focus-on="{{visible}}" ng-keydown="keyHandler($event)">
         <div class="palette-results" ng-show="filteredCommands.length">
-            <div class="palette-item" ng-repeat="command in (filteredCommands = (commands | filter:query))" ng-class="{selected: $index == activeCmd}">{{command.name}}</div>
+            <div class="palette-item" ng-repeat="command in (filteredCommands = (commands | filter:query))" ng-class="{selected: $index == activeCmd}" ng-bind-html-unsafe="command.name | highlight:query" scroll-to-contain="{{$index == activeCmd}}"></div>
+            <!-- <div class="palette-item" ng-repeat="command in (filteredCommands = (commands | fuzzy:query))" ng-class="{selected: $index == activeCmd}">{{command.name}}</div> -->
         </div>
     </div>
 </div>
