@@ -61,13 +61,25 @@ angular.module('palette', ['ngSanitize'])
       link: function (scope, elem, attrs) {
         attrs.$observe('drScrollToContain', function (newValue) {
           if(newValue === 'true') {
-            // elem[0].parentElement.scrollIntoView;
             elem[0].scrollIntoView(false);
           }
         });
       }
     };
   })
+  .directive('drKeydown', ['$parse',function ($parse) {
+    // ng-keydown isn't in angular until 1.1.3 =(
+    return {
+      restrict: 'A',
+      link: function (scope, elem, attrs) {
+        elem.bind('keydown', function (e) {
+          scope.$apply(function () {
+            $parse(attrs.drKeydown)(scope, {$event:e});
+          });
+        });
+      }
+    };
+  }])
   .filter('drHighlight', function () {
 
     // super ugly function needs beauty help
@@ -134,18 +146,7 @@ angular.module('palette', ['ngSanitize'])
 
         $scope.visible = false;
         // some placeholder commands for the moment
-        $scope.commands = [
-          { name: 'Fake: Placeholder Command' },
-          { name: 'Placeholder: Does Nothing' },
-          { name: 'Fake: Could Do Something. But I Doubt It.' },
-          { name: 'Placeholder: Just Try It Anyway' },
-          { name: 'Fake: Lorem ipsum dolor sit.' },
-          { name: 'Placeholder: Lorem ipsum dolor.' },
-          { name: 'Fake: Lorem ipsum dolor sit amet, consectetur.' },
-          { name: 'Placeholder: Lorem ipsum dolor sit amet.' },
-          { name: 'Goto: Google.com', cmd: 'extLink', data: 'http://google.com' },
-          { name: 'Goto: /r/programming', cmd: 'extLink', data: 'http://reddit.com/r/programming' },
-        ];
+        $scope.commands = [];
 
         function addRoutesToPallete () {
           for(var path in $route.routes){

@@ -1,7 +1,7 @@
 <div class="palette-body" ng-class="{palettevisible: visible}">
     <div class="palette-inner">
         <input type="text" class="palette-input" ng-model="query.name"
-            dr-blur="close()" dr-focus-on="{{visible}}" ng-keydown="paletteInputKeyHandler($event)">
+            dr-blur="close()" dr-focus-on="{{visible}}" dr-keydown="paletteInputKeyHandler($event)">
         <div class="palette-results" ng-show="filteredCommands.length">
             <div class="palette-item"
                 ng-repeat="command in (filteredCommands = (commands | orderBy: 'name'| filter:query ))"

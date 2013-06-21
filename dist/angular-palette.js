@@ -19,17 +19,17 @@ angular.module('palette', [
         this.subscribedMethod = fn;
       }
     };
-  }]).directive('ngBlur', function () {
+  }]).directive('drBlur', function () {
   return function (scope, elem, attrs) {
     elem.bind('blur', function () {
-      scope.$apply(attrs.ngBlur);
+      scope.$apply(attrs.drBlur);
     });
   };
-}).directive('focusOn', [function () {
+}).directive('drFocusOn', [function () {
     return {
       restrict: 'A',
       link: function (scope, elem, attrs) {
-        attrs.$observe('focusOn', function (newValue) {
+        attrs.$observe('drFocusOn', function (newValue) {
           if (newValue === 'true') {
             setTimeout(function () {
               elem[0].focus();
@@ -38,18 +38,32 @@ angular.module('palette', [
         });
       }
     };
-  }]).directive('scrollToContain', function () {
+  }]).directive('drScrollToContain', function () {
   return {
     restrict: 'A',
     link: function (scope, elem, attrs) {
-      attrs.$observe('scrollToContain', function (newValue) {
+      attrs.$observe('drScrollToContain', function (newValue) {
         if (newValue === 'true') {
           elem[0].scrollIntoView(false);
         }
       });
     }
   };
-}).filter('highlight', function () {
+}).directive('drKeydown', [
+  '$parse',
+  function ($parse) {
+    return {
+      restrict: 'A',
+      link: function (scope, elem, attrs) {
+        elem.bind('keydown', function (e) {
+          scope.$apply(function () {
+            $parse(attrs.drKeydown)(scope, { $event: e });
+          });
+        });
+      }
+    };
+  }
+]).filter('drHighlight', function () {
   function wrapText(index, str, prefix, suffix, innerTextLength) {
     return [
       str.slice(0, index),
@@ -100,26 +114,7 @@ angular.module('palette', [
         function ($scope) {
           var ENTER_KEY = 13, UP_ARROW_KEY = 38, DOWN_ARROW_KEY = 40, ESCAPE_KEY = 27;
           $scope.visible = false;
-          $scope.commands = [
-            { name: 'Fake: Placeholder Command' },
-            { name: 'Placeholder: Does Nothing' },
-            { name: 'Fake: Could Do Something. But I Doubt It.' },
-            { name: 'Placeholder: Just Try It Anyway' },
-            { name: 'Fake: Lorem ipsum dolor sit.' },
-            { name: 'Placeholder: Lorem ipsum dolor.' },
-            { name: 'Fake: Lorem ipsum dolor sit amet, consectetur.' },
-            { name: 'Placeholder: Lorem ipsum dolor sit amet.' },
-            {
-              name: 'Goto: Google.com',
-              cmd: 'extLink',
-              data: 'http://google.com'
-            },
-            {
-              name: 'Goto: /r/programming',
-              cmd: 'extLink',
-              data: 'http://reddit.com/r/programming'
-            }
-          ];
+          $scope.commands = [];
           function addRoutesToPallete() {
             for (var path in $route.routes) {
               var route = $route.routes[path];
@@ -225,6 +220,6 @@ angular.module('templates-main', ['angular-palette/palette.tpl.html']);
 angular.module('angular-palette/palette.tpl.html', []).run([
   '$templateCache',
   function ($templateCache) {
-    $templateCache.put('angular-palette/palette.tpl.html', '<div class="palette-body" ng-class="{palettevisible: visible}">\n' + '    <div class="palette-inner">\n' + '        <input type="text" class="palette-input" ng-model="query.name"\n' + '            ng-blur="close()" focus-on="{{visible}}" ng-keydown="paletteInputKeyHandler($event)">\n' + '        <div class="palette-results" ng-show="filteredCommands.length">\n' + '            <div class="palette-item"\n' + '                ng-repeat="command in (filteredCommands = (commands | orderBy: \'name\'| filter:query ))"\n' + '                ng-class="{selected: $index == activeCmd}"\n' + '                ng-bind-html-unsafe="command.name | highlight:query.name"\n' + '                scroll-to-contain="{{$index == activeCmd}}"\n' + '                ng-click="useSelection(command)">\n' + '            </div>\n' + '        </div>\n' + '    </div>\n' + '</div>\n' + '');
+    $templateCache.put('angular-palette/palette.tpl.html', '<div class="palette-body" ng-class="{palettevisible: visible}">\n' + '    <div class="palette-inner">\n' + '        <input type="text" class="palette-input" ng-model="query.name"\n' + '            dr-blur="close()" dr-focus-on="{{visible}}" dr-keydown="paletteInputKeyHandler($event)">\n' + '        <div class="palette-results" ng-show="filteredCommands.length">\n' + '            <div class="palette-item"\n' + '                ng-repeat="command in (filteredCommands = (commands | orderBy: \'name\'| filter:query ))"\n' + '                ng-class="{selected: $index == activeCmd}"\n' + '                ng-bind-html-unsafe="command.name | drHighlight:query.name"\n' + '                dr-scroll-to-contain="{{$index == activeCmd}}"\n' + '                ng-click="useSelection(command)">\n' + '            </div>\n' + '        </div>\n' + '    </div>\n' + '</div>\n' + '');
   }
 ]);

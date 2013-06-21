@@ -1,4 +1,4 @@
-/* line 13, ../../styles/palette-darksoda.scss */
+/* line 14, ../../styles/palette-darksoda.scss */
 .palette-body {
   z-index: 1000;
   position: fixed;
@@ -30,13 +30,13 @@
   transform: scale3d(0.85, 0.85, 1);
   visibility: hidden;
 }
-/* line 33, ../../styles/palette-darksoda.scss */
+/* line 34, ../../styles/palette-darksoda.scss */
 .palette-body form {
   margin: 0;
   padding: 0;
 }
 
-/* line 39, ../../styles/palette-darksoda.scss */
+/* line 40, ../../styles/palette-darksoda.scss */
 .palette-body.palettevisible {
   opacity: 1;
   -webkit-transform: scale3d(1, 1, 1);
@@ -47,12 +47,12 @@
   visibility: visible;
 }
 
-/* line 46, ../../styles/palette-darksoda.scss */
+/* line 47, ../../styles/palette-darksoda.scss */
 .palette-inner {
   width: 100%;
 }
 
-/* line 50, ../../styles/palette-darksoda.scss */
+/* line 51, ../../styles/palette-darksoda.scss */
 input[type="text"].palette-input {
   background: #383838;
   color: white;
@@ -75,7 +75,7 @@ input[type="text"].palette-input {
   border-radius: 0px;
 }
 
-/* line 68, ../../styles/palette-darksoda.scss */
+/* line 69, ../../styles/palette-darksoda.scss */
 .palette-results {
   margin-top: 4px;
   max-height: 350px;
@@ -84,7 +84,7 @@ input[type="text"].palette-input {
   overflow-y: auto;
 }
 
-/* line 77, ../../styles/palette-darksoda.scss */
+/* line 78, ../../styles/palette-darksoda.scss */
 .palette-item {
   color: #d9d9d9;
   border-bottom: 1px solid #1f1f1f;
@@ -96,7 +96,7 @@ input[type="text"].palette-input {
   transition: background 80ms ease-out;
 }
 
-/* line 88, ../../styles/palette-darksoda.scss */
+/* line 89, ../../styles/palette-darksoda.scss */
 .palette-item.selected {
   padding: 4px 3px 10px 8px;
   color: white;
@@ -104,20 +104,20 @@ input[type="text"].palette-input {
   border-top: none;
 }
 
-/* line 96, ../../styles/palette-darksoda.scss */
+/* line 97, ../../styles/palette-darksoda.scss */
 .palettematch {
   color: #43c5db;
   font-weight: bold;
   text-decoration: underline;
 }
 
-/* line 102, ../../styles/palette-darksoda.scss */
+/* line 103, ../../styles/palette-darksoda.scss */
 .palette-body ::-webkit-scrollbar {
   width: 13px;
   padding: 0;
 }
 
-/* line 107, ../../styles/palette-darksoda.scss */
+/* line 108, ../../styles/palette-darksoda.scss */
 .palette-body ::-webkit-scrollbar-track {
   background: #1f1f1f;
   width: 5px;
@@ -125,7 +125,7 @@ input[type="text"].palette-input {
   margin: 0;
 }
 
-/* line 116, ../../styles/palette-darksoda.scss */
+/* line 117, ../../styles/palette-darksoda.scss */
 .palette-body ::-webkit-scrollbar-thumb {
   width: 1px;
   padding: 0;
