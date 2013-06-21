@@ -29,7 +29,7 @@ Just press 'ctrl+shift+l' to bring up the command palette.
 
 ### Installation
 
-1. Clone this repo or run `bower install angular-palette`
+1. Clone this repo or run `bower install angular-palette2`
 2. Include the `angular-palette.js`, `palette-darksoda.css`, `mousetrap.js`,
 `mousetrap-global-bind.js` files in your page. (There's also a build with mousetrap
 included. In this dist folder look for `angular-palette-deps.min.js`)
