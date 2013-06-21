@@ -40,14 +40,14 @@ included. In this dist folder look for `angular-palette-deps.min.js`)
 ### Usage
 
 There's a few things that come with angular-palette
- - paletteService (used for exporting commands)
- - drBlur - a directive for calling functions on blur events
- - drFocusOn - a directive for focus the element this is applied to when the expression
+ - **paletteService** (used for exporting commands)
+ - **drBlur** - a directive for calling functions on blur events
+ - **drFocusOn** - a directive for focus the element this is applied to when the expression
 passed is true
- - drScrollToContain - a directive for making the page scroll to contain this element
+ - **drScrollToContain** - a directive for making the page scroll to contain this element
 when the expression passed is true
- - drHighlight - a directive to highlight a query in text (requires ng-bind-html-unsafe)
- - palette - The directive this whole module is about
+ - **drHighlight** - a directive to highlight a query in text (requires ng-bind-html-unsafe)
+ - **palette** - The directive this whole module is about
 
 You're welcome to use any of the other directives included but the important things
 are the palette directive and the paletteService.
@@ -92,6 +92,7 @@ palette. This is simply done by adding a name property to the routes you have de
 That's it!
 
 If you want to export some commands to the palette you can do that with the paletteService
+
 **Warning:** angular-palette is super new so this feature is a little iffy at the moment. You
 can only export commands from one view/controller at a time so if you've got any nested views
 and you try exporting from multiple that wont work.
@@ -155,3 +156,7 @@ in the palette like Sublime Text does.
 
  - MouseTrap [https://github.com/ccampbell/mousetrap](https://github.com/ccampbell/mousetrap)
  - NgSanitize
+
+### Contributing
+
+Coming soon
