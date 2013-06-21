@@ -18,7 +18,7 @@ palette.
 
 
 ### Demo
-
+[http://derekries.github.io/angular-palette](http://derekries.github.io/angular-palette)
 Just press 'ctrl+shift+l' to bring up the command palette.
 
 ### Features
