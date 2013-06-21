@@ -1,0 +1,127 @@
+@import "compass";
+
+$main-bg-color: #51C046;
+$shadow-color: rgba(0, 0, 0, 0.6);
+$secondary-bg-color: #428D3A;
+$active-bg: #30592C;
+$text-color: #FFF;
+$highlight-text-color: #43C5DB;
+
+$palette-width: 500px;
+$palette-padding: 6px;
+$palette-border-radius: 3px;
+
+
+.palette-body {
+    z-index:1000;
+    position: fixed;
+    background: $main-bg-color;
+    width: $palette-width;
+    padding: $palette-padding;
+    margin-left: -$palette-width / 2 - $palette-padding;
+    top: 0;
+    left: 50%;
+    border: 1px solid $shadow-color;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+    @include border-radius($palette-border-radius);
+    @include box-shadow(0px 5px 8px $shadow-color);
+    @include transition(all 100ms ease-in-out);
+
+    opacity: 0;
+    @include transform(scale3d(0.85, 0.85, 1));
+    visibility: hidden;
+
+    form {
+        margin: 0;
+        padding: 0;
+    }
+}
+
+.palette-body.palettevisible {
+    // display: none; // Remove this line to go back to animations
+    opacity: 1;
+    @include transform(scale3d(1, 1, 1));
+    visibility: visible;
+}
+
+.palette-inner {
+    width: 100%;
+}
+
+input[type="text"].palette-input {
+    background: $secondary-bg-color;
+    color: $text-color;
+    border: none;
+    border-bottom: 1px solid lighten($main-bg-color, 10%);
+    margin: 0;
+    width: $palette-width - 5px;
+    padding: 3px 0;
+    padding-left: 5px;
+    font-size: 22px;
+    line-height: 1em;
+    height: auto;
+
+
+    @include box-shadow(inset 0 1px 8px $shadow-color);
+    @include border-radius(0px);
+}
+
+.palette-results {
+    margin-top: $palette-padding - 2px;
+    // min-height: 150px;
+    max-height: 350px;
+    background: $secondary-bg-color;
+    border: 1px solid lighten($shadow-color, 10%);
+    overflow-y: auto;
+}
+
+.palette-item {
+    color: darken($text-color, 15%);
+    border-bottom: 1px solid darken($secondary-bg-color, 10%);
+    border-top: 1px solid $main-bg-color;
+    padding: 3px 3px 10px 8px;
+    &:first-child {
+        // border-top: none;
+    }
+    @include transition(background 80ms ease-out);
+}
+
+.palette-item.selected {
+    padding: 4px 3px 10px 8px;
+    color: $text-color;
+    background: $active-bg;
+    // font-weight: bold;
+    border-top: none;
+}
+
+.palettematch {
+  color: $highlight-text-color;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.palette-body ::-webkit-scrollbar {
+    width: 13px;
+    padding: 0;
+}
+
+.palette-body ::-webkit-scrollbar-track {
+    background: darken($secondary-bg-color, 10%);
+    // border: 1px solid black;
+    //
+    width: 5px;
+    padding: 0;
+    margin: 0;
+}
+
+.palette-body ::-webkit-scrollbar-thumb {
+    width: 1px;
+    padding: 0;
+    margin: 0;
+    border: 1px solid black;
+    background: lighten($main-bg-color, 15%);
+    border-left: lighten($main-bg-color, 25%);
+    border-right: darken($main-bg-color, 25%);
+    border-radius: 30px;
+}
