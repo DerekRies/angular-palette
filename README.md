@@ -55,4 +55,4 @@ in the palette like Sublime Text does.
 ### Dependencies
 
  - MouseTrap [https://github.com/ccampbell/mousetrap](https://github.com/ccampbell/mousetrap)
- - NgSanitize (optional: Only needed to do the highlighting filter)
+ - NgSanitize

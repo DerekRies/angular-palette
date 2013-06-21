@@ -92,6 +92,14 @@ module.exports = function (grunt) {
       dist: {
         src: ['angular-palette.js', 'tmp/templates.js'],
         dest: 'dist/angular-palette.js'
+      },
+      deps: {
+        src: [
+          'components/mousetrap/mousetrap.min.js',
+          'components/mousetrap/plugins/global-bind/mousetrap-global-bind.min.js',
+          'dist/angular-palette.min.js'
+        ],
+        dest: 'dist/angular-palette-deps.min.js'
       }
     },
     compass: {
@@ -137,5 +145,7 @@ module.exports = function (grunt) {
   ]);
 
   grunt.registerTask('default', ['build']);
+  grunt.registerTask('deps', ['concat:deps']);
 
+  grunt.registerTask('fullbuild', ['build', 'concat:deps']);
 };

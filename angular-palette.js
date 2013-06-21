@@ -6,6 +6,7 @@ angular.module('palette', ['ngSanitize'])
     var oldCommands = [];
 
     return {
+
       subscribedMethod: undefined,
 
       exportCommands: function (newCommands) {
@@ -24,14 +25,14 @@ angular.module('palette', ['ngSanitize'])
     };
 
   }])
-  .directive('ngBlur', function () {
+  .directive('drBlur', function () {
     return function (scope, elem, attrs) {
       elem.bind('blur', function () {
-        scope.$apply(attrs.ngBlur);
+        scope.$apply(attrs.drBlur);
       });
     };
   })
-  .directive('focusOn', [function () {
+  .directive('drFocusOn', [function () {
     // will focus the element its applied to when the condition passed
     // to it is true. Value is interpolated at the moment, {{value}}
     // and so is equal to a string.
@@ -41,7 +42,7 @@ angular.module('palette', ['ngSanitize'])
     return {
       restrict: 'A',
       link: function (scope, elem, attrs) {
-        attrs.$observe('focusOn', function (newValue) {
+        attrs.$observe('drFocusOn', function (newValue) {
           if(newValue === 'true'){
             setTimeout(function () {
               elem[0].focus();
@@ -51,14 +52,14 @@ angular.module('palette', ['ngSanitize'])
       }
     };
   }])
-  .directive('scrollToContain', function () {
+  .directive('drScrollToContain', function () {
     // Like the focus-on directive, the window will scroll to contain
     // any element with this applied to it when the condition passed is
     // true.
     return {
       restrict: 'A',
       link: function (scope, elem, attrs) {
-        attrs.$observe('scrollToContain', function (newValue) {
+        attrs.$observe('drScrollToContain', function (newValue) {
           if(newValue === 'true') {
             // elem[0].parentElement.scrollIntoView;
             elem[0].scrollIntoView(false);
@@ -67,7 +68,7 @@ angular.module('palette', ['ngSanitize'])
       }
     };
   })
-  .filter('highlight', function () {
+  .filter('drHighlight', function () {
 
     // super ugly function needs beauty help
     function wrapText (index, str, prefix, suffix, innerTextLength) {

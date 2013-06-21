@@ -1,0 +1,13 @@
+{
+  "name": "angular-palette",
+  "version": "0.1.0",
+  "main": "angular-palette.js",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "components"
+  ],
+  "dependencies": {
+    "mousetrap": "~1.4.2"
+  }
+}
