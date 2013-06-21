@@ -2,6 +2,14 @@
 
 module.exports = function (grunt) {
 
+  grunt.loadNpmTasks('grunt-contrib-clean');
+  grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-ngmin');
+  grunt.loadNpmTasks('grunt-html2js');
+  grunt.loadNpmTasks('grunt-text-replace');
+
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
 
@@ -16,37 +24,99 @@ module.exports = function (grunt) {
         ' */\n'
     },
     dirs: {
-      dest: 'dist'
+      dest: 'dist',
+      tmp: 'tmp'
     },
     clean: {
-      files: [{
-        dot: true,
-        src: [
-          '<%= dirs.dist %>/*',
-          '!<%= dirs.dist %>/.git*'
-        ]
-      }]
+      build: {
+        src: ['<%= dirs.tmp %>/*', '<%= dirs.dest %>/*', '!<%= dirs.dest %>/.git*']
+      }
     },
-    concat: {},
+    copy: {
+      dist: {
+        files: [{
+          expand: true,
+          dest: 'dist/',
+          src: [
+            '<%= pkg.name %>.js',
+          ]
+        }]
+      }
+    },
+    ngmin: {
+      dist: {
+        files: [{
+          expand: true,
+          src: 'dist/<%= pkg.name %>.js',
+          dest: ''
+        }]
+      }
+    },
+    html2js: {
+      options: {
+
+      },
+      main: {
+        src: 'palette.tpl.html',
+        dest: 'tmp/templates.js'
+      }
+    },
+    replace: {
+      template: {
+        src: ['tmp/templates.js'],
+        dest: 'tmp/templates.js',
+        replacements: [
+          {
+            from: '../palette',
+            to: 'angular-palette/palette',
+          }
+        ]
+      },
+      dist: {
+        src: ['dist/angular-palette.js'],
+        dest: 'dist/angular-palette.js',
+        replacements: [
+          {
+            from: '\'ngSanitize\']',
+            to: '"ngSanitize", "templates-main"]'
+          }
+        ]
+      }
+    },
+    concat: {
+      options: {
+        seperator: '\n'
+      },
+      dist: {
+        src: ['angular-palette.js', 'tmp/templates.js'],
+        dest: 'dist/angular-palette.js'
+      }
+    },
     uglify: {
       options: {
         banner: '<%= meta.banner %>'
       },
       build: {
-        src: '<%= pkg.name %>.js',
-        dest: '<%= dirs.dest >%/<%= pkg.name %>.min.js'
+        src: '<%= dirs.dest %>/<%= pkg.name %>.js',
+        dest: '<%= dirs.dest %>/<%= pkg.name %>.min.js'
       }
     },
 
 
   });
 
-  grunt.loadNpmTasks('grunt-contrib-uglify');
-
   grunt.registerTask('build', [
-    'clean',
+    'clean:build',
+    'html2js',
+    'replace:template',
+    'concat:dist',
+    'replace:dist',
+    // 'copy',
+    'ngmin',
     'uglify'
   ]);
+
+  grunt.registerTask('templates', ['html2js', 'replace:template']);
 
   grunt.registerTask('default', ['build']);
 

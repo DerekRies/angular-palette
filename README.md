@@ -19,9 +19,7 @@ palette.
 
 ### Demo
 
-Just press 'ctrl+shift+m' to bring up the command palette. I'm not sure if that
-works in Mac or not. Probably not, I'll fix that. Works on Windows and Linux
-from what I've tested.
+Just press 'ctrl+shift+l' to bring up the command palette.
 
 ### Why Should I Use It?
 
@@ -43,9 +41,18 @@ from one controller at a time (they replace each other) which is soon to be fixe
  - Looks Boss. Styled to look like the Dark Soda Theme
 
 ### Coming Soon
+
  - Customizeable Shortcut Key for opening the palette
  - Multiple Styles (Light Soda first)
  - Fuzzy Filtering just like sublime does. (Only normal filtering at the moment)
  - Export commands from more than one controller at a time.
+ - Custom Scroll Area - Styled right in all browsers and better scrolling while following
+results in the palette with up/down keys.
+ - Handle MouseTrap shortcut key binding in one go, and display those key combos
+in the palette like Sublime Text does.
  - Docs
 
+### Dependencies
+
+ - MouseTrap [https://github.com/ccampbell/mousetrap](https://github.com/ccampbell/mousetrap)
+ - NgSanitize (optional: Only needed to do the highlighting filter)

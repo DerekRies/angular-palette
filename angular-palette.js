@@ -6,12 +6,10 @@ angular.module('palette', ['ngSanitize'])
     var oldCommands = [];
 
     return {
-
       subscribedMethod: undefined,
 
       exportCommands: function (newCommands) {
         if(typeof this.subscribedMethod !== 'undefined'){
-          // console.log('Should be calling subscribedMethod right now');
           this.subscribedMethod(newCommands, oldCommands);
         }
         oldCommands = newCommands;
@@ -27,7 +25,7 @@ angular.module('palette', ['ngSanitize'])
 
   }])
   .directive('ngBlur', function () {
-    return function(scope, elem, attrs) {
+    return function (scope, elem, attrs) {
       elem.bind('blur', function () {
         scope.$apply(attrs.ngBlur);
       });
@@ -38,11 +36,11 @@ angular.module('palette', ['ngSanitize'])
     // to it is true. Value is interpolated at the moment, {{value}}
     // and so is equal to a string.
     //
-    // When trying to use an actual true/false expression with binding
+    // When trying to use an actual true/false expression with binding '='
     // it was causing scope issues with the rest of module.
     return {
       restrict: 'A',
-      link: function(scope, elem, attrs) {
+      link: function (scope, elem, attrs) {
         attrs.$observe('focusOn', function (newValue) {
           if(newValue === 'true'){
             setTimeout(function () {
@@ -86,40 +84,16 @@ angular.module('palette', ['ngSanitize'])
       return value;
     };
   })
-  .directive('palette', ['$timeout','$location', '$route', 'paletteService',
-    function($timeout, $location, $route, paletteService){
+  .directive('palette',
+    ['$timeout','$location', '$route', 'paletteService',
+    function ($timeout, $location, $route, paletteService) {
     return {
-      restrict: 'E',
+      restrict: 'EA',
       replace: true,
       scope: {},
-      templateUrl: 'drcomponents/palette/palette.tpl.html',
+      templateUrl: 'angular-palette/palette.tpl.html',
 
       link: function (scope) {
-        /*
-        This works on windows and linux, but no mac because their cmd key is different
-        Going to try and get a solution using the jQuery keypress (which worked on linux
-        and mac last time I tried, but no windows)
-         */
-        // var keys = {};
-        // angular.element(window).bind('keydown', function (e) {
-        //   keys[e.keyCode] = true;
-        //   if(keys[17] && keys[77]) {
-        //     if(scope.visible){
-        //       scope.$apply(function () {
-        //         scope.close();
-        //       });
-        //     }
-        //     else{
-        //       scope.$apply(function () {
-        //         scope.open();
-        //       });
-        //     }
-        //   }
-        // })
-        // .bind('keyup', function (e) {
-        //   keys[e.keyCode] = false;
-        // });
-
 
         /* =============================================================================
 
@@ -150,7 +124,7 @@ angular.module('palette', ['ngSanitize'])
 
       },
 
-      controller: function ($scope) {
+      controller: ['$scope', function ($scope) {
 
         var ENTER_KEY = 13,
             UP_ARROW_KEY = 38,
@@ -300,6 +274,6 @@ angular.module('palette', ['ngSanitize'])
           }
         };
 
-      }
+      }]
     };
   }]);

@@ -97,10 +97,13 @@ input[type="text"].palette-input {
   text-decoration: underline;
 }
 
+@mixin palette-scroll-body {
+  width: 13px !important;
+  padding: 0 !important;
+}
+
 .palette-body ::-webkit-scrollbar {
-    width:13px;
-    padding: 0;
-    // padding:2px;
+    @include palette-scroll-body;
 }
 
 .palette-body ::-webkit-scrollbar-track {
@@ -121,4 +124,27 @@ input[type="text"].palette-input {
     border-left: lighten($main-bg-color, 25%);
     border-right: darken($main-bg-color, 25%);
     border-radius: 30px;
+}
+
+scrollbar {
+  -moz-appearance: none !important;
+  background: darken($secondary-bg-color, 10%) !important;
+}
+
+thumb, scrollbarbutton {
+  -moz-appearance: none !important;
+  background: darken($secondary-bg-color, 10%) !important;
+}
+
+thumb:hover, scrollbarbutton:hover {
+  -moz-appearance: none !important;
+  background: $secondary-bg-color !important;
+}
+
+scrollbarbutton {
+  display: none !important;
+}
+
+scrollbar[orient="vertical"] {
+  @include palette-scroll-body;
 }
