@@ -135,7 +135,7 @@ angular.module('palette', ['ngSanitize'])
 
         ============================================================================= */
 
-        Mousetrap.bindGlobal(['ctrl+shift+m', 'command+shift+m'], function () {
+        Mousetrap.bindGlobal(['ctrl+shift+l', 'command+shift+l'], function () {
           if (scope.visible) {
             scope.$apply(function () {
               scope.close();
