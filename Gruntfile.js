@@ -6,6 +6,8 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-contrib-compass');
+  grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-ngmin');
   grunt.loadNpmTasks('grunt-html2js');
   grunt.loadNpmTasks('grunt-text-replace');
@@ -29,7 +31,7 @@ module.exports = function (grunt) {
     },
     clean: {
       build: {
-        src: ['<%= dirs.tmp %>/*', '<%= dirs.dest %>/*', '!<%= dirs.dest %>/.git*']
+        src: ['<%= dirs.tmp %>/*', '<%= dirs.dest %>/*', '<%= dirs.dest %>/styles/*', '!<%= dirs.dest %>/.git*']
       }
     },
     copy: {
@@ -92,6 +94,23 @@ module.exports = function (grunt) {
         dest: 'dist/angular-palette.js'
       }
     },
+    compass: {
+      dist: {
+        options: {
+          sassDir: 'styles',
+          cssDir: 'dist/styles'
+        }
+      }
+    },
+    cssmin: {
+      dist: {
+        expand: true,
+        cwd: 'dist/styles',
+        src: ['*.css', '!*.min.css'],
+        dest: 'dist/styles',
+        ext: '.min.css'
+      }
+    },
     uglify: {
       options: {
         banner: '<%= meta.banner %>'
@@ -107,16 +126,15 @@ module.exports = function (grunt) {
 
   grunt.registerTask('build', [
     'clean:build',
+    'compass:dist',
+    'cssmin:dist',
     'html2js',
     'replace:template',
     'concat:dist',
     'replace:dist',
-    // 'copy',
     'ngmin',
     'uglify'
   ]);
-
-  grunt.registerTask('templates', ['html2js', 'replace:template']);
 
   grunt.registerTask('default', ['build']);
 

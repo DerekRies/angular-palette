@@ -1,12 +1,16 @@
-$main-bg-color: #484848;
+@import "compass";
+
+$main-bg-color: #51C046;
 $shadow-color: rgba(0, 0, 0, 0.6);
-$secondary-bg-color: #383838;
-$active-bg: #181818;
+$secondary-bg-color: #428D3A;
+$active-bg: #30592C;
 $text-color: #FFF;
 $highlight-text-color: #43C5DB;
 
 $palette-width: 500px;
 $palette-padding: 6px;
+$palette-border-radius: 3px;
+
 
 .palette-body {
     z-index:1000;
@@ -20,7 +24,7 @@ $palette-padding: 6px;
     border: 1px solid $shadow-color;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 
-    @include border-radius(3px);
+    @include border-radius($palette-border-radius);
     @include box-shadow(0px 5px 8px $shadow-color);
     @include transition(all 100ms ease-in-out);
 
@@ -97,13 +101,9 @@ input[type="text"].palette-input {
   text-decoration: underline;
 }
 
-@mixin palette-scroll-body {
-  width: 13px !important;
-  padding: 0 !important;
-}
-
 .palette-body ::-webkit-scrollbar {
-    @include palette-scroll-body;
+    width: 13px;
+    padding: 0;
 }
 
 .palette-body ::-webkit-scrollbar-track {
@@ -124,27 +124,4 @@ input[type="text"].palette-input {
     border-left: lighten($main-bg-color, 25%);
     border-right: darken($main-bg-color, 25%);
     border-radius: 30px;
-}
-
-scrollbar {
-  -moz-appearance: none !important;
-  background: darken($secondary-bg-color, 10%) !important;
-}
-
-thumb, scrollbarbutton {
-  -moz-appearance: none !important;
-  background: darken($secondary-bg-color, 10%) !important;
-}
-
-thumb:hover, scrollbarbutton:hover {
-  -moz-appearance: none !important;
-  background: $secondary-bg-color !important;
-}
-
-scrollbarbutton {
-  display: none !important;
-}
-
-scrollbar[orient="vertical"] {
-  @include palette-scroll-body;
 }

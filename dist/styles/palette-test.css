@@ -1,0 +1,138 @@
+/* line 13, ../../styles/palette-test.scss */
+.palette-body {
+  z-index: 1000;
+  position: fixed;
+  background: #51c046;
+  width: 500px;
+  padding: 6px;
+  margin-left: -256px;
+  top: 0;
+  left: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.6);
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -o-border-radius: 3px;
+  border-radius: 3px;
+  -webkit-box-shadow: 0px 5px 8px rgba(0, 0, 0, 0.6);
+  -moz-box-shadow: 0px 5px 8px rgba(0, 0, 0, 0.6);
+  box-shadow: 0px 5px 8px rgba(0, 0, 0, 0.6);
+  -webkit-transition: all 100ms ease-in-out;
+  -moz-transition: all 100ms ease-in-out;
+  -o-transition: all 100ms ease-in-out;
+  transition: all 100ms ease-in-out;
+  opacity: 0;
+  -webkit-transform: scale3d(0.85, 0.85, 1);
+  -moz-transform: scale3d(0.85, 0.85, 1);
+  -ms-transform: scale3d(0.85, 0.85, 1);
+  -o-transform: scale3d(0.85, 0.85, 1);
+  transform: scale3d(0.85, 0.85, 1);
+  visibility: hidden;
+}
+/* line 33, ../../styles/palette-test.scss */
+.palette-body form {
+  margin: 0;
+  padding: 0;
+}
+
+/* line 39, ../../styles/palette-test.scss */
+.palette-body.palettevisible {
+  opacity: 1;
+  -webkit-transform: scale3d(1, 1, 1);
+  -moz-transform: scale3d(1, 1, 1);
+  -ms-transform: scale3d(1, 1, 1);
+  -o-transform: scale3d(1, 1, 1);
+  transform: scale3d(1, 1, 1);
+  visibility: visible;
+}
+
+/* line 46, ../../styles/palette-test.scss */
+.palette-inner {
+  width: 100%;
+}
+
+/* line 50, ../../styles/palette-test.scss */
+input[type="text"].palette-input {
+  background: #428d3a;
+  color: white;
+  border: none;
+  border-bottom: 1px solid #75cd6c;
+  margin: 0;
+  width: 495px;
+  padding: 3px 0;
+  padding-left: 5px;
+  font-size: 22px;
+  line-height: 1em;
+  height: auto;
+  -webkit-box-shadow: inset 0 1px 8px rgba(0, 0, 0, 0.6);
+  -moz-box-shadow: inset 0 1px 8px rgba(0, 0, 0, 0.6);
+  box-shadow: inset 0 1px 8px rgba(0, 0, 0, 0.6);
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  -ms-border-radius: 0px;
+  -o-border-radius: 0px;
+  border-radius: 0px;
+}
+
+/* line 68, ../../styles/palette-test.scss */
+.palette-results {
+  margin-top: 4px;
+  max-height: 350px;
+  background: #428d3a;
+  border: 1px solid rgba(26, 26, 26, 0.6);
+  overflow-y: auto;
+}
+
+/* line 77, ../../styles/palette-test.scss */
+.palette-item {
+  color: #d9d9d9;
+  border-bottom: 1px solid #31692b;
+  border-top: 1px solid #51c046;
+  padding: 3px 3px 10px 8px;
+  -webkit-transition: background 80ms ease-out;
+  -moz-transition: background 80ms ease-out;
+  -o-transition: background 80ms ease-out;
+  transition: background 80ms ease-out;
+}
+
+/* line 88, ../../styles/palette-test.scss */
+.palette-item.selected {
+  padding: 4px 3px 10px 8px;
+  color: white;
+  background: #30592c;
+  border-top: none;
+}
+
+/* line 96, ../../styles/palette-test.scss */
+.palettematch {
+  color: #43c5db;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+/* line 102, ../../styles/palette-test.scss */
+.palette-body ::-webkit-scrollbar {
+  width: 13px;
+  padding: 0;
+}
+
+/* line 107, ../../styles/palette-test.scss */
+.palette-body ::-webkit-scrollbar-track {
+  background: #31692b;
+  width: 5px;
+  padding: 0;
+  margin: 0;
+}
+
+/* line 116, ../../styles/palette-test.scss */
+.palette-body ::-webkit-scrollbar-thumb {
+  width: 1px;
+  padding: 0;
+  margin: 0;
+  border: 1px solid black;
+  background: #87d37f;
+  border-left: #aae0a5;
+  border-right: #286422;
+  border-radius: 30px;
+}
