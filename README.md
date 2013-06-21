@@ -118,7 +118,9 @@ and you try exporting from multiple that wont work.
       }]);
 
 ***name** (string) is what you want to be displayed in the palette
+
 **cmd** (function|string) takes a function you wish to call when the command is selected from the palette
+
 **data** (optional) only used for the built in functions
 
 **cmd** can also take a couple built in functions
