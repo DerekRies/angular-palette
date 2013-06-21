@@ -43,6 +43,7 @@ from one controller at a time (they replace each other) which is soon to be fixe
  - Looks Boss. Styled to look like the Dark Soda Theme
 
 ### Coming Soon
+ - Customizeable Shortcut Key for opening the palette
  - Multiple Styles (Light Soda first)
  - Fuzzy Filtering just like sublime does. (Only normal filtering at the moment)
  - Export commands from more than one controller at a time.
