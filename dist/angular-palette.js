@@ -1,7 +1,7 @@
 'use strict';
 angular.module('palette', [
   'ngSanitize',
-  'templates-main'
+  'templates-palette'
 ]).factory('paletteService', [function () {
     var oldCommands = [];
     return {
@@ -114,7 +114,7 @@ angular.module('palette', [
         function ($scope) {
           var ENTER_KEY = 13, UP_ARROW_KEY = 38, DOWN_ARROW_KEY = 40, ESCAPE_KEY = 27;
           $scope.visible = false;
-          $scope.commands = [];
+          $scope.commands = paletteService.getCommands();
           function addRoutesToPallete() {
             for (var path in $route.routes) {
               var route = $route.routes[path];
@@ -216,7 +216,7 @@ angular.module('palette', [
     };
   }
 ]);
-angular.module('templates-main', ['angular-palette/palette.tpl.html']);
+angular.module('templates-palette', ['angular-palette/palette.tpl.html']);
 angular.module('angular-palette/palette.tpl.html', []).run([
   '$templateCache',
   function ($templateCache) {
