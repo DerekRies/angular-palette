@@ -4,6 +4,7 @@ angular.module('palette', [
   'templates-palette'
 ]).factory('paletteService', [function () {
     var oldCommands = [];
+    var sharedCommands = [];
     return {
       subscribedMethod: undefined,
       exportCommands: function (newCommands) {
@@ -13,10 +14,16 @@ angular.module('palette', [
         oldCommands = newCommands;
       },
       getCommands: function () {
-        return oldCommands;
+        return oldCommands.concat(sharedCommands);
       },
       subscribe: function (fn) {
         this.subscribedMethod = fn;
+      },
+      addSharedCommand: function(commands){
+        sharedCommands = sharedCommands.concat(commands);
+      },
+      clearSharedCommand: function(){
+        sharedCommands.splice(-sharedCommands.length, sharedCommands.length);
       }
     };
   }]).directive('drBlur', function () {
@@ -114,7 +121,7 @@ angular.module('palette', [
         function ($scope) {
           var ENTER_KEY = 13, UP_ARROW_KEY = 38, DOWN_ARROW_KEY = 40, ESCAPE_KEY = 27;
           $scope.visible = false;
-          $scope.commands = paletteService.getCommands();
+          $scope.commands = [];
           function addRoutesToPallete() {
             for (var path in $route.routes) {
               var route = $route.routes[path];
@@ -138,6 +145,7 @@ angular.module('palette', [
             addNewCommands(newCommands);
           });
           $scope.activeCmd = 0;
+          $scope.commands = paletteService.getCommands();
           addRoutesToPallete();
           $scope.paletteInputKeyHandler = function (e) {
             if (e.keyCode === UP_ARROW_KEY) {
