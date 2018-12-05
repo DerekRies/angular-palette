@@ -1,5 +1,7 @@
 ## angular-palette
 
+**This Repository is not maintained**
+
 ### What Is It?
 
 
