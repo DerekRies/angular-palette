@@ -1,9 +1,10 @@
 'use strict';
 angular.module('palette', [
   'ngSanitize',
-  'templates-main'
+  'templates-palette'
 ]).factory('paletteService', [function () {
     var oldCommands = [];
+    var sharedCommands = [];
     return {
       subscribedMethod: undefined,
       exportCommands: function (newCommands) {
@@ -13,10 +14,16 @@ angular.module('palette', [
         oldCommands = newCommands;
       },
       getCommands: function () {
-        return oldCommands;
+        return oldCommands.concat(sharedCommands);
       },
       subscribe: function (fn) {
         this.subscribedMethod = fn;
+      },
+      addSharedCommand: function(commands){
+        sharedCommands = sharedCommands.concat(commands);
+      },
+      clearSharedCommand: function(){
+        sharedCommands.splice(-sharedCommands.length, sharedCommands.length);
       }
     };
   }]).directive('drBlur', function () {
@@ -138,6 +145,7 @@ angular.module('palette', [
             addNewCommands(newCommands);
           });
           $scope.activeCmd = 0;
+          $scope.commands = paletteService.getCommands();
           addRoutesToPallete();
           $scope.paletteInputKeyHandler = function (e) {
             if (e.keyCode === UP_ARROW_KEY) {
@@ -216,7 +224,7 @@ angular.module('palette', [
     };
   }
 ]);
-angular.module('templates-main', ['angular-palette/palette.tpl.html']);
+angular.module('templates-palette', ['angular-palette/palette.tpl.html']);
 angular.module('angular-palette/palette.tpl.html', []).run([
   '$templateCache',
   function ($templateCache) {
